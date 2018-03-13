@@ -55,3 +55,7 @@ Actually only products with a price table on their web page are supported, cause
 * !(`hotelfahrkarte`)[https://www.vgn.de/tickets/hotelfahrkarte/]
 * !(`kombiticket`)[https://www.vgn.de/tickets/kombiticket/]
 * !(`autohaus-ticket`)[https://www.vgn.de/tickets/autohaus-ticket/]
+
+## Licence
+
+Source code is licensed under MIT license. No license and no guarantees implied on the produced data, produce and use on your own risk.
