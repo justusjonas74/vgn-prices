@@ -3,7 +3,7 @@
 A simple web scraper to extract prices from [`www.vgn.de/tickets`](https://www.vgn.de/tickets/) to JSON, CSV and Markdown.
 
 ## Usage 
-### Use results
+### Use results ...
 
 The repo includes the latest results, so you don't have to run the script yourself. 
 
@@ -11,7 +11,7 @@ The repo includes the latest results, so you don't have to run the script yourse
 * __CSV__: [`prices.csv`](prices.csv)
 * __Markdown__: [`prices.md`](prices.md)
 
-### Do it yourself
+### ... or scrap yourself
 
 ```bash
 git clone https://github.com/justusjonas74/vgn-prices
