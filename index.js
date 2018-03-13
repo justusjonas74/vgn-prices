@@ -1,5 +1,6 @@
 const rp = require('request-promise')
 const cheerio = require('cheerio')
+var stringify = require('csv-stringify');
 const fs = require('fs')
 
 const PRICE_LEVELS = require('./price-levels.js')
@@ -20,12 +21,15 @@ function scrapProductPage ($, products, addNullValues) {
   products.forEach((product) => {
     PRICE_LEVELS.forEach((ps) => {
       const selector = `.${product[1]}.${ps[0]} .Price`
-      const price = $(selector).text()
-      if ((price !== '–') || addNullValues) {
+      const print_price = $(selector).text()
+      const price = print_price !== '–' ? parseFloat(print_price.replace(" €","").replace(",",".")) : ""
+      if ((print_price !== '–') || addNullValues) {
         const res = {
           name: product[0],
           price_level: ps[1],
-          price: price}
+          price: price,
+          price_print_friendly: print_price
+        }
         results.push(res)
       }
     })
@@ -46,12 +50,37 @@ function mergeResults (arr) {
   return res
 }
 
-Promise.all(promiseArr)
-  .then(results => {
-    const res = mergeResults(results)
-    let data = JSON.stringify({products: res})
-    fs.writeFileSync('results.json', data)
+function resultsToJSON(results) {
+   
+  const res = mergeResults(results) //.groupBy('name')
+  console.log(`Scraped ${res.length} items.`)
+  let data = JSON.stringify( res )
+  fs.writeFileSync('prices.json', data)
+  console.log('Created \'prices.json\'')
+  return results
+}
+
+function resultsToCSV(results) {
+  var columns = {
+    name: 'Name',
+    price_level: 'Price level',
+    price: 'Price',
+    price_print_friendly: 'Price (String)'
+  }
+  const options = {quotedString: true, columns: columns, header: true}
+  const res = mergeResults(results)
+  stringify(res, options, function(err, data){
+    if (err) { throw err }
+    fs.writeFileSync('prices.csv', data)
+    console.log('Created \'prices.csv\'')
   })
+
+};
+ 
+
+Promise.all(promiseArr)
+  .then(results => resultsToJSON(results))
+  .then(results => resultsToCSV(results))
   .catch((err) => {
     console.log(err)
   })
