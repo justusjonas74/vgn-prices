@@ -1,18 +1,30 @@
 {
   "name": "vgn-prices",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple web scraper to extract prices from !(`www.vgn.de/tickets`)[https://www.vgn.de/tickets/] to JSON, CSV and Markdown.",
   "main": "index.js",
   "scripts": {
+    "scraper": "node index.js",
+    "markdown": "rm prices.md && printf \"# Prices\\n\\n\" > prices.md && cat prices.json | ./node_modules/.bin/md-table >> prices.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Francis Doege",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "pdf2table": "0.0.2",
+    "csv": "^2.0.0",
+    "markdown-table-cli": "^1.0.1",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justusjonas74/vgn-prices.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justusjonas74/vgn-prices/issues"
+  },
+  "homepage": "https://github.com/justusjonas74/vgn-prices#readme"
 }
